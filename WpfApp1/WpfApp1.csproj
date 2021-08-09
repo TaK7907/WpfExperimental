@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WpfAppLogicImplementation\WpfAppLogicImplementation.csproj" />
+    <ProjectReference Include="..\WpfAppLogicInterface\WpfAppLogicInterface.csproj" />
+    <ProjectReference Include="..\WpfAppLogicTestingDoubles\WpfAppLogicTestingDoubles.csproj" />
+    <ProjectReference Include="..\WpfAppUtilities\WpfAppUtilities.csproj" />
+  </ItemGroup>
+
+</Project>

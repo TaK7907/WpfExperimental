@@ -1,0 +1,71 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="500">
+    <Window.DataContext>
+        <local:MainWindowViewModel/>
+    </Window.DataContext>
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="40"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="GroupBox" Grid.Row="0">
+            <StackPanel>
+                <TextBlock Text="Revision: XX.YY.ZZ"/>
+                <CheckBox Content="Check1" IsEnabled="True"/>
+                <CheckBox Content="Check2" IsEnabled="False"/>
+                <TextBlock Text="Path:"/>
+                <TextBox Text="Path/To/Something" IsReadOnly="True"/>
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Grid.Row="1">
+            <TextBox
+                Text="TextBox"
+                TextWrapping="NoWrap"
+                />
+            <Button
+                Content="Button"
+                Command="{Binding ExecCommand}"
+                />
+        </StackPanel>
+        <GroupBox
+            Grid.Row="2"
+            Header="Upgrade information:">
+            <StackPanel>
+                <TextBlock Text="Model Name:"/>
+                <TextBox
+                    Text="{Binding NewModelName, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsReadOnly="True"/>
+                <TextBlock Text="Version:"/>
+                <TextBox
+                    Text="{Binding NewVersion, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsReadOnly="True"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox
+            Grid.Column="1"
+            Grid.RowSpan="3"
+            Header="Progress report:"
+            >
+            <TextBox
+                Text="{Binding ProgressReport}"
+                IsReadOnly="True"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollBarVisibility="Visible"
+                ScrollViewer.CanContentScroll="True"
+                TextChanged="TextBox_TextChanged"
+                />
+        </GroupBox>
+    </Grid>
+</Window>
