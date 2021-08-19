@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace WpfApp1
 {
     /// <summary>
     /// モデルがビューモデルに公開するインタフェース
     /// </summary>
-    public interface IAppLogic
+    public interface IAppLogic : INotifyPropertyChanged
     {
         public string CurrentModelName { get; }
         public string CurrentVersion { get; }

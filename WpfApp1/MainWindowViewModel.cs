@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace WpfApp1
 {
@@ -77,15 +78,17 @@ namespace WpfApp1
 
         public MainWindowViewModel()
         {
+            _dispatcher = Dispatcher.CurrentDispatcher;
+
             /// TODO: 本番コードに差し替え
 #if false //Production
             _logic = new AppLogic();
 #else
-            _logic = new FakeAppLogic();
+            _logic = new FakeAppLogic2();
 #endif
             IsRunning = false;
 
-            ExecCommand = new (
+            ExecCommand = new(
                 async () => await ExecuteAsync(),
                 _ => !IsRunning);
 
@@ -112,6 +115,8 @@ namespace WpfApp1
             ReportProgress("Synchronization done.");
         }
 
+        private readonly Dispatcher _dispatcher;
+
         private async Task ExecuteAsync()
         {
             IsRunning = true;
@@ -120,7 +125,15 @@ namespace WpfApp1
             try
             {
                 ReportProgress("Started.");
+
+#if true
+                // FakeAppLogic2に仕込んだInvalidOperationExceptionを回避するため
+                // Dispather経由で非同期処理実体を呼び出す。
+                // (See also: FakeAppLogic2.Execute() 内のコメント)
+                await _dispatcher.InvokeAsync(_logic.Execute());
+#else
                 await Task.Run(() => _logic.Execute());
+#endif
             }
             finally
             {
